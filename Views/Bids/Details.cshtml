@@ -1,0 +1,93 @@
+﻿@model NbdAplication.Models.Bids
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Bids</h4>
+    <hr />
+    <dl class="row">
+        @*<dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Amount)
+        </dd>*@
+        @*<dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EstAmount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EstAmount)
+        </dd>*@
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ActAmount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ActAmount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsApprovedByClient)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IsApprovedByClient)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsApprovedByNBD)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IsApprovedByNBD)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RevisionCheck)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RevisionCheck)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Projects.PName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Projects.PName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nbdstaff.StaffFirst)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nbdstaff.StaffFirst)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nbdstaff.StaffLast)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nbdstaff.StaffLast)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Occupation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Occupation.Position)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Sale)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Sale.Sales)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Designer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Designer.Designers)
+        </dd>
+    </dl>
+
+</div>
+
+
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-outline-secondary">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>

@@ -1,0 +1,79 @@
+﻿@model IEnumerable<NbdAplication.Models.Occupation>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@section head{
+    <style type="text/css">
+        body, header {
+            background-image: url('../Files/Images/greygreen.jpg');
+            background-size: cover;
+            height: auto;
+        }
+    </style>
+}
+<h1>Occupation</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-primary font-weight-bold">Create New</a>
+</p>
+
+<form asp-action="Index" method="get">
+    @*<div class="form-actions no-color">
+            <p>
+                Find by name of Project/Project Site: <input type="text" name="SearchString" value="@ViewData["SearchFilter"]" />
+                <input type="submit" value="Search" class="btn btn-default" /> |
+                <a asp-action="Index">Clear Filter</a>
+            </p>
+        </div>*@
+    <div class="input-group">
+        <input type="text" name="SearchString" class="form-control" value="@ViewData["SearchFilter"]" placeholder="Find by name of occupation" aria-label="Recipient's username" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+            <a class="btn btn-outline-secondary" asp-action="Index">Clear Filter</a>
+        </div>
+    </div>
+</form>
+<br />
+
+
+<table class="table">
+    <thead class="table-dark">
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOccupation="@ViewData["occupationPosition"]">@Html.DisplayNameFor(model => model.Position)</a>
+</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+               @Html.DisplayNameFor(model => model.PricePerHour)
+</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Position)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PricePerHour)
+                </td>
+                <td>
+                    @if (ViewBag.isAdmin == true)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-secondary">Edit</a>
+                        @*<a asp-action="Details" asp-route-id="@item.ID" class="btn btn-outline-info">Details</a>*@
+                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

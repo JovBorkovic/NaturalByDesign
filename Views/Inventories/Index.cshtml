@@ -1,0 +1,97 @@
+﻿@model IEnumerable<NbdAplication.Models.Inventory>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@section head{
+    <style type="text/css">
+        body, header {
+            background-image: url('../Files/Images/greygreen.jpg');
+            background-size: cover;
+            height: auto;
+        }
+    </style>
+}
+<h1>Inventory</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-primary font-weight-bold">Create New</a>
+</p>
+
+<form asp-action="Index" method="get">
+    @*<div class="form-actions no-color">
+            <p>
+                Find by name of Project/Project Site: <input type="text" name="SearchString" value="@ViewData["SearchFilter"]" />
+                <input type="submit" value="Search" class="btn btn-default" /> |
+                <a asp-action="Index">Clear Filter</a>
+            </p>
+        </div>*@
+    <div class="input-group">
+        <input type="text" name="SearchString" class="form-control" value="@ViewData["SearchFilter"]" placeholder="Find by name of Project/Project Site" aria-label="Recipient's username" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+            <a class="btn btn-outline-secondary" asp-action="Index">Clear Filter</a>
+        </div>
+    </div>
+</form>
+<br />
+
+
+<table class="table">
+    <thead class="table-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemDescription)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.List)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Size)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Bids)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Material)
+                </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemDescription)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.List)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Size)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Bids.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Material.MaterialName)
+                    </td>*@
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-secondary">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-outline-info">Details</a>
+                    @*<a asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

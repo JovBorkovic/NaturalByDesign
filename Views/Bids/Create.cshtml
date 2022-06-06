@@ -1,0 +1,154 @@
+﻿@model NbdAplication.Models.Bids
+
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Bids</h4>
+<hr />
+<div class="row">
+        <form asp-action="Create">
+            <div class="row">
+                <div class="col-12">
+                    <div class="col">
+                        <h3 class="control-label"> Project Information </h3>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="form-group">
+                            <label asp-for="ProjectsID" class="control-label"></label>
+                            <select asp-for="ProjectsID" class="form-control" asp-items="ViewBag.ProjectsID">
+                                <option value="">Select a Project Name</option>
+                            </select>
+                            <span asp-validation-for="ProjectsID" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="control-label">@Html.DisplayNameFor(model => model.BidInventories)</label>
+                            <div class="col-md-offset-1">
+                                <table>
+                                    <tr>
+                                        @{
+                                            int cnt = 0;
+                                            List<NbdAplication.ViewModels.OptionVM> checkboxes = ViewBag.ConditionOptions;
+                                            foreach (var checkbox in checkboxes)
+                                            {
+                                                if (cnt++ % 3 == 0)
+                                                {
+                                                @:</tr><tr>
+                                                }
+                                                @:<td>
+                                                    <input type="checkbox"
+                                                           name="selectedOptions"
+                                                           value="@checkbox.ID"
+                                                           @(Html.Raw(checkbox.Assigned ? "checked=\"checked\"" : "")) />
+                                                    @checkbox.DisplayText @:&nbsp;&nbsp;
+                                                @:</td>
+                                            }
+                                        @:</tr>
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="EstAmount" class="control-label"></label>
+                                <input asp-for="EstAmount" class="form-control" />
+                                <span asp-validation-for="EstAmount" class="text-danger"></span>
+                            </div>
+                        </div>
+                        @if (ViewBag.isAdmin == true)
+                        {
+                            <div class="col">
+                                <h3 class="control-label"> Bid approval status </h3>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label" data-toggle="tooltip" data-placement="top" data-html="true" title="Did the <b>managers</b> Approve of the bid?">
+                                        <input class="form-check-input" asp-for="IsApprovedByNBD" /> @Html.DisplayNameFor(model => model.IsApprovedByNBD)
+                                    </label>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label" data-toggle="tooltip" data-placement="top" data-html="true" title="Did the <b>Client</b> Approve of the bid?">
+                                            <input class="form-check-input" asp-for="IsApprovedByClient" /> @Html.DisplayNameFor(model => model.IsApprovedByClient)
+                                        </label>
+                                    </div>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label" data-toggle="tooltip" data-placement="top" data-html="true" title="Is there a need for a revision?">
+                                            <input class="form-check-input" asp-for="RevisionCheck" /> @Html.DisplayNameFor(model => model.RevisionCheck)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col" hidden>
+                                <h3 class="control-label"> Bid approval status </h3>
+                                <div class="form-group form-check" disabled>
+                                    <label class="form-check-label" data-toggle="tooltip" data-placement="top" data-html="true" title="Did the <b>managers</b> Approve of the bid?">
+                                        <input class="form-check-input" asp-for="IsApprovedByNBD" /> @Html.DisplayNameFor(model => model.IsApprovedByNBD)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check " disabled>
+                                    <label class="form-check-label" data-toggle="tooltip" data-placement="top" data-html="true" title="Did the <b>Client</b> Approve of the bid?">
+                                        <input class="form-check-input" asp-for="IsApprovedByClient" /> @Html.DisplayNameFor(model => model.IsApprovedByClient)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label" disabled data-toggle="tooltip" data-html="true" data-placement="top" title="Is there a need for a revision?">
+                                        <input class="form-check-input" asp-for="RevisionCheck" /> @Html.DisplayNameFor(model => model.RevisionCheck)
+                                    </label>
+                                </div>
+                            </div>
+                        }
+                        <div class="col">
+                            <h3 class="control-label"> Staff </h3>
+                            <div class="form-group">
+                                <label asp-for="NbdstaffID" class="control-label"></label>
+                                <select asp-for="NbdstaffID" class="form-control" asp-items="ViewBag.NbdstaffID">
+                                    <option value="">Select a Staff Name</option>
+                                </select>
+                                <span asp-validation-for="NbdstaffID" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="OccupationID" class="control-label"></label>
+                                <select asp-for="OccupationID" class="form-control" asp-items="ViewBag.OccupationID">
+                                    <option value="">Select a Occupation</option>
+                                </select>
+                                <span asp-validation-for="OccupationID" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="SaleID" class="control-label"></label>
+                                <select asp-for="SaleID" class="form-control" asp-items="ViewBag.SaleID">
+                                    <option value="">Select a Sale</option>
+                                </select>
+                                <span asp-validation-for="SaleID" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="DesignerID" class="control-label"></label>
+                                <select asp-for="DesignerID" class="form-control" asp-items="ViewBag.DesignerID">
+                                    <option value="">Select a Designer</option>
+                                </select>
+                                <span asp-validation-for="DesignerID" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

@@ -1,0 +1,60 @@
+﻿
+@model NbdAplication.ViewModels.UserVM
+
+
+@{ ViewData["Title"] = "Delete"; }
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <h4>User</h4>
+        <hr />
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label asp-for="UserName" class="control-label"></label>
+                    <input asp-for="UserName" class="form-control" readonly="readonly" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="userRoles" class="control-label"></label>
+                    <table>
+                        <tr>
+                            @{ int cnt = 0;
+                                List<NbdAplication.ViewModels.RoleVM> roles = ViewBag.Roles;
+                                foreach (var role in roles)
+                                {
+                                    if (cnt++ % 3 == 0)
+                                    {
+                                    @:</tr><tr>
+                                    }
+                                    @:<td>
+                                        <input type="checkbox"
+                                               name="selectedRoles"
+                                               disabled
+                                               value="@role.RoleName"
+                                               @(Html.Raw(role.Assigned ? "checked=\"checked\"" : "")) />
+                                        @role.RoleName @:&nbsp;&nbsp;
+                                    @:</td>
+                                }
+                            @:</tr>
+                            }
+                        </table>
+                    </div>
+
+                </div>
+        </div>
+
+                <input type="submit" value="Delete" class="btn btn-danger" /> |
+        </form>
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</div>

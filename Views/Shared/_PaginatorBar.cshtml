@@ -1,0 +1,43 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div class="d-flex justify-content-end">
+    <partial name="_PageSizeSelector" />
+</div>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled='disabled'" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled='disabled'" : "";
+}
+
+<nav>
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <button type="submit" name="page" value="1" @prevDisabled class="btn page-link">
+                <span aria-hidden="true">&lArr;</span>Prev
+            </button>
+        </li>
+        <li class="page-item">
+            <button type="submit" name="page" value="@(Model.PageIndex -1)" @prevDisabled class="btn page-link">
+                <span aria-hidden="true">&larr;</span>Prev
+            </button>
+        </li>
+        <li class="page-item">
+            <button type="button" disabled="disabled" class="btn btn-light btn-outline-dark bg-white text-black">
+                @Model.PageIndex of @Model.TotalPages
+            </button>
+        </li>
+        <li class="page-item">
+            <button type="submit" name="page" value="@(Model.PageIndex +1)" @nextDisabled class="btn page-link">
+                Next<span aria-hidden="true" >&rarr;</span>
+            </button>
+        </li>
+
+        <li class="page-item">
+            <button type="submit" name="page" value="@(Model.TotalPages)" @nextDisabled class="btn page-link">
+                Next <span aria-hidden="true">&rArr;</span>
+            </button>
+        </li>
+    </ul>
+</nav>

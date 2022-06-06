@@ -1,0 +1,47 @@
+﻿@model IEnumerable<NbdAplication.Models.Designer>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@section head{
+    <style type="text/css">
+        body, header {
+            background-image: url('../Files/Images/greygreen.jpg');
+            background-size: cover;
+            height: auto;
+        }
+    </style>
+}
+
+<h1>Designers</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-primary font-weight-bold">Create New</a>
+</p>
+
+
+<table class="table">
+    <thead class="table-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Designers)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Designers)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-secondary">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-outline-info">Details</a>
+                    @*<a asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

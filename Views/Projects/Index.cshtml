@@ -1,0 +1,114 @@
+﻿@model IEnumerable<NbdAplication.Models.Projects>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@section head{
+    <style type="text/css">
+        body, header {
+            background-image: url('../Files/Images/greygreen.jpg');
+            background-size: cover;
+            height: 200%;
+        }
+    </style>
+}
+
+<h1>Projects</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-primary font-weight-bold">Create New</a>
+</p>
+
+<form asp-action="Index" method="get">
+    @*<div class="form-actions no-color">
+        <p>
+            Find by name of Project/Project Site: <input type="text" name="SearchString" value="@ViewData["SearchFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Clear Filter</a>
+        </p>
+    </div>*@
+    <div class="input-group">
+        <input type="text" name="searchString" class="form-control" value="@ViewData["SearchFilter"]" placeholder="Find by name of Project/Project Site" aria-label="Recipient's username" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+            <a class="btn btn-outline-secondary" asp-action="Index">Clear Filter</a>
+        </div>
+    </div>
+</form>
+<br />
+
+
+<table class="table table-hover table-dark">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortProjects="@ViewData["ProjectNameSortParm"]">@Html.DisplayNameFor(model => model.PName)</a>
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.PName)
+        </th>*@
+            @*<th>
+                @Html.DisplayNameFor(model => model.EstStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstEnd)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.PSite)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.ActStartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActEndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BidAmount)
+            </th>*@
+            @*<th>
+                <a asp-action="Index" asp-route-sortProjects="@ViewData["ClientSortParm"]">@Html.DisplayNameFor(model => model.Client)</a>
+            </th>*@
+            @*<th>
+                @Html.DisplayNameFor(model => model.Client)
+            </th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PName)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.EstStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstEnd)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.PSite)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.ActStartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActEndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BidAmount)
+            </td>*@
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Client.ClientName)
+            </td>*@
+
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-secondary">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-outline-info">Details</a>
+                @*<a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-outline-danger">Delete</a>*@
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

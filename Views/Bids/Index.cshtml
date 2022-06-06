@@ -1,0 +1,153 @@
+﻿@model IEnumerable<NbdAplication.Models.Bids>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@section head{
+    <style type="text/css">
+        body, header {
+            background-image: url('../Files/Images/greygreen.jpg');
+            background-size: cover;
+            height: auto;
+        }
+    </style>
+}
+<h1>Bids</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-primary font-weight-bold">Create New</a>
+</p>
+
+<div class="col-12">
+
+    <form asp-action="Index" method="get">
+        <div class="input-group">
+            <input type="text" name="searchString" class="form-control" value="@ViewData["SearchFilter"]" placeholder="Find by name of Project/Project Site" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+                <a class="btn btn-outline-secondary" asp-action="Index">Clear Filter</a>
+            </div>
+        </div>
+        <br/>
+        <div class="d-flex justify-content-end">
+            <partial name="_PageSizeSelector" />
+        </div>
+        <br />
+
+
+
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th>
+                        <a asp-action="Index" asp-route-sortbid="@ViewData["ProjectNameSortParm"]">@Html.DisplayNameFor(model => model.Projects)</a>
+                    </th>
+
+                    <th>
+                        <a asp-action="Index" asp-route-sortbid="@ViewData["estAmount"]">@Html.DisplayNameFor(model => model.EstAmount)</a>
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-sortbid="@ViewData["actAmount"]">@Html.DisplayNameFor(model => model.ActAmount)</a>
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BidInventories)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsApprovedByClient)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsApprovedByNBD)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RevisionCheck)
+                    </th>
+                    @*<th>
+                            @Html.DisplayNameFor(model => model.Nbdstaff)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Occupation)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Sale)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Designer)
+                        </th>*@
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Projects.PName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EstAmount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ActAmount)
+                        </td>
+                        <td>
+                            @foreach (var c in item.BidInventories)
+                            {
+                                @c.Inventory.ItemDescription <br />
+                            }
+                        </td>
+                        <td>
+                            @if (item.IsApprovedByClient == true)
+                            {
+                                <p class="btn btn-success">Approved</p>
+                            }
+                            else
+                            {
+                                <p class="btn btn-danger">Declined</p>
+                            }
+                        </td>
+                        <td>
+                            @if (item.IsApprovedByNBD == true)
+                            {
+                                <p class="btn btn-success">Approved</p>
+                            }
+                            else
+                            {
+                                <p class="btn btn-danger">Declined</p>
+                            }
+                        </td>
+                        <td>
+                            @if (item.RevisionCheck == true)
+                            {
+                                <p class="btn btn-warning">Needs revision</p>
+                            }
+                            else
+                            {
+                                <p class="btn btn-light">No revision</p>
+                            }
+                        </td>
+
+                        @*<td>
+                                @Html.DisplayFor(modelItem => item.Nbdstaff.StaffFirst)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Occupation.Position)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Sale.Sales)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Designer.Designers)
+                            </td>*@
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-secondary">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-outline-info">Details</a>
+                            @*<a asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <partial name="_PaginatorBar" />
+
+    </form>
+</div>

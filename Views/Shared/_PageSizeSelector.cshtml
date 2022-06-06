@@ -1,0 +1,22 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    <br>
+    <br>
+
+    <div class="form-group col-4 ">
+        <div class="input-group ">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    Page Size:
+                </span>
+                @Html.DropDownList("pageSizeID", null, htmlAttributes: new { @class = "form-control" })
+                <input type="submit" class="btn btn-outline-dark text-black" value="Set Page Size" />
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <br>
+}

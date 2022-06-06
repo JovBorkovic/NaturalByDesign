@@ -1,0 +1,152 @@
+﻿@model NbdAplication.Models.Bids
+
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Bids</h4>
+<hr />
+
+<form asp-action="Edit">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="col">
+                <h3 class="control-label"> Project Information </h3>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ID" />
+                <div class="form-group">
+                    <label asp-for="ProjectsID" class="control-label" data-html="true" data-toggle="tooltip" data-placement="top" title="The <u>name</u> of the <b>project<b>"></label>
+                    <select asp-for="ProjectsID" class="form-control" asp-items="ViewBag.ProjectsID"></select>
+                    <span asp-validation-for="ProjectsID" class="text-danger"></span>
+                </div>
+
+                <div class="form-group" data-toggle="tooltip" data-placement="top" data-html="true" title="Inventory items that will be used in the project">
+                    <label class="control-label">@Html.DisplayNameFor(model => model.BidInventories)</label>
+                    <div class="col-md-offset-1">
+                        <table>
+                            <tr>
+                                @{
+
+                                    int count = 0;
+                                    List<NbdAplication.ViewModels.OptionVM> checkboxes = ViewBag.ConditionOptions;
+                                    foreach (var checkbox in checkboxes)
+                                    {
+                                        if (count++ % 3 == 0)
+                                        {
+                                        @:</tr><tr>
+                                        }
+                                        @:<td>
+                                            <input type="checkbox"
+                                                   name="selectedOptions"
+                                                   value="@checkbox.ID"
+                                                   @(Html.Raw(checkbox.Assigned ? "checked=\"checked\"" : "")) />
+                                            @checkbox.DisplayText @:&nbsp;&nbsp;
+                                        @:</td>
+                                    }
+                                @:</tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EstAmount" class="control-label" data-toggle="tooltip" data-html="true" data-placement="top" title="The <u>estimated amount</u> for a projects budget <em>before</em> finalizing decisions."></label>
+                        <input asp-for="EstAmount" class="form-control" />
+                        <span asp-validation-for="EstAmount" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ActAmount" class="control-label" data-toggle="tooltip" data-html="true" data-placement="top" title="The <u>actual amount</u> for a projects budget <em>after</em> finalizing decisions."></label>
+                        <input asp-for="ActAmount" class="form-control" />
+                        <span asp-validation-for="ActAmount" class="text-danger"></span>
+                    </div>
+                </div>
+                @if (ViewBag.isAdmin == true)
+                {
+                    <div class="col">
+                        <h3 class="control-label"> Bid approval status </h3>
+                        <div class="form-group form-check">
+                            <label class="form-check-label" data-toggle="tooltip" data-placement="top" data-html="true" title="Did the <b>managers</b> Approve of the bid?">
+                                <input class="form-check-input" asp-for="IsApprovedByNBD" /> @Html.DisplayNameFor(model => model.IsApprovedByNBD)
+                            </label>
+                        </div>
+                        <div class="col">
+                            <div class="form-group form-check">
+                                <label class="form-check-label" data-toggle="tooltip" data-placement="top" data-html="true" title="Did the <b>Client</b> Approve of the bid?">
+                                    <input class="form-check-input" asp-for="IsApprovedByClient" /> @Html.DisplayNameFor(model => model.IsApprovedByClient)
+                                </label>
+                            </div>
+                            <div class="form-group form-check">
+                                <label class="form-check-label" data-toggle="tooltip" data-placement="top" data-html="true" title="Is there a need for a revision?">
+                                    <input class="form-check-input" asp-for="RevisionCheck" /> @Html.DisplayNameFor(model => model.RevisionCheck)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col" hidden>
+                        <h3 class="control-label"> Bid approval status </h3>
+                        <div class="form-group form-check" disabled>
+                            <label class="form-check-label" data-toggle="tooltip" data-placement="top" data-html="true" title="Did the <b>managers</b> Approve of the bid?">
+                                <input class="form-check-input" asp-for="IsApprovedByNBD" /> @Html.DisplayNameFor(model => model.IsApprovedByNBD)
+                            </label>
+                        </div>
+                        <div class="form-group form-check " disabled>
+                            <label class="form-check-label" data-toggle="tooltip" data-placement="top" data-html="true" title="Did the <b>Client</b> Approve of the bid?">
+                                <input class="form-check-input" asp-for="IsApprovedByClient" /> @Html.DisplayNameFor(model => model.IsApprovedByClient)
+                            </label>
+                        </div>
+                        <div class="form-group form-check">
+                            <label class="form-check-label" disabled data-toggle="tooltip" data-html="true" data-placement="top" title="Is there a need for a revision?">
+                                <input class="form-check-input" asp-for="RevisionCheck" /> @Html.DisplayNameFor(model => model.RevisionCheck)
+                            </label>
+                        </div>
+                    </div>
+                }
+
+                <div class="col">
+                    <h3 class="control-label"> Staff </h3>
+                    <div class="form-group">
+                        <label asp-for="NbdstaffID" class="control-label" data-toggle="tooltip" data-html="true" data-placement="top" title="The department manager assigned to the project"></label>
+                        <select asp-for="NbdstaffID" class="form-control" asp-items="ViewBag.NbdstaffID"></select>
+                        <span asp-validation-for="NbdstaffID" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OccupationID" class="control-label" data-toggle="tooltip" data-html="true" data-placement="top" title="The role of the staff manager"></label>
+                        <select asp-for="OccupationID" class="form-control" asp-items="ViewBag.OccupationID"></select>
+                        <span asp-validation-for="OccupationID" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SaleID" class="control-label" data-toggle="tooltip" data-html="true" data-placement="top" title="The sales team"></label>
+                        <select asp-for="SaleID" class="form-control" asp-items="ViewBag.SaleID"></select>
+                        <span asp-validation-for="SaleID" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DesignerID" class="control-label" data-toggle="tooltip" data-html="true" data-placement="top" title="The designer assigned to the project"></label>
+                        <select asp-for="DesignerID" class="form-control" asp-items="ViewBag.DesignerID"></select>
+                        <span asp-validation-for="DesignerID" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-outline-success" />
+        </div>
+    </form>
+
+
+
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

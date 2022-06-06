@@ -1,0 +1,30 @@
+﻿@model NbdAplication.Models.Material
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Material</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MaterialName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MaterialName)
+        </dd>
+        @*<dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Bids)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Bids.ID)
+        </dd>*@
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-outline-secondary">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
